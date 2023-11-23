@@ -31,18 +31,21 @@ const render = () => {
 
 const setState = (newState) => {
   state = newState;
+  localStorage.setItem("state", JSON.stringify(newState));
   render();
 };
 
 const fetchTodo = () => {
-  setState({
-    ...state,
-    todos: [
-      { id: 3, content: "Javascript", completed: false },
-      { id: 2, content: "CSS", completed: true },
-      { id: 1, content: "HTML", completed: false },
-    ],
-  });
+  setState(
+    JSON.parse(localStorage.getItem("state")) || {
+      ...state,
+      todos: [
+        { id: 3, content: "Javascript", completed: false },
+        { id: 2, content: "CSS", completed: true },
+        { id: 1, content: "HTML", completed: false },
+      ],
+    }
+  );
 };
 
 const generateNextId = () =>
